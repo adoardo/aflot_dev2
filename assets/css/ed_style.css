@@ -1,0 +1,259 @@
+body {
+    background-color: #eaecf7;
+}
+body.bg-white {
+    background-color: #fff;
+}
+#fp-nav > ul > li {
+    width: 27px !important;
+    height: 27px !important;
+}
+#fp-nav ul li a.active span, #fp-nav ul li:hover a.active span, .fp-slidesNav ul li a.active span, .fp-slidesNav ul li:hover a.active span {
+    height: 5px !important;
+    width: 5px !important;
+    background: #fff !important;
+    margin: -2.5px 0 0 -2.5px !important;
+}
+#fp-nav ul li a span, .fp-slidesNav ul li a span {
+    background: #808384 !important;
+}
+.header-menu.show,
+.menu-reg.menu-show {
+    z-index: 1000 !important;
+}
+.mor-nav-drop {
+    display: flex;
+}
+.search-block__filter > div:not(:last-child) .select {
+    border-right: none;
+}
+.section-flot {
+    background-color: #eaecf7;
+}
+.fp-overflow {
+    width: 100%;
+}
+.section-work {
+    border-top: 1px solid #d5d7ef;
+    margin-top: 0px;
+    padding-top: 20px;
+}
+#add-existing-ship,
+#add-new-ship,
+#ship-info,
+#modal-error-reporting,
+#modal-response {
+    width: 90%;
+    max-width: 1190px;
+    max-height: 98%;
+    overflow: auto;
+    top: 50%;
+    left: 50%;
+    transition: 0.3s all;
+    padding: 0px;
+    height: auto;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: -1;
+}
+#add-existing-ship.menu-show,
+#add-new-ship.menu-show,
+#ship-info.menu-show,
+#modal-error-reporting.menu-show,
+#modal-response.menu-show {
+    opacity: 1;
+    z-index: 1000;
+}
+.cabinet .modal-block h2.modal-title {
+    font-size: 36px;
+    font-family: "Myriad Pro Light", sans-serif;
+    color: black;
+    font-weight: 300;
+    margin: 0px;
+}
+
+.suda-top__item {
+    cursor: pointer;
+}
+.modal-block {
+    width: calc(100% - 80px);
+    padding-bottom: 20px;
+}
+.suda-item__text {
+    padding-bottom: 10px;
+}
+#dd-new-ship .suda-item__text {
+    padding-bottom: 0px;
+}
+#add-existing-ship.menu-reg .tag-input__item {
+    padding: 10px 15px;
+}
+#modal-response.menu-show {
+    width: auto;
+    max-width: 560px;
+}
+#modal-response.menu-show .modal-block {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    grid-gap: 30px;
+}
+
+.fp-viewing-2 #fp-nav ul li a.active span, .fp-viewing-2 #fp-nav ul li:hover a.active span, .fp-viewing-2 .fp-slidesNav ul li a.active span, .fp-viewing-2 .fp-slidesNav ul li:hover a.active span {
+    background: #9c291b !important;
+}
+.header-overlay {
+    background-image: none;
+    background-color: rgba(77, 81, 114, 0.5);
+}
+#scroll_top {
+    display: none;
+}
+
+.userSelUnput-wrap .select2-container {
+    width: 100%;
+}
+.userSelUnput-wrap .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: solid 2px #e6e6ed;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.dm-search {
+    padding: 8px;
+    width: calc(100% - 16px);
+    position: relative;
+}
+.dm-search > input {
+    border: 1px solid #dda6a6;
+    border-radius: 3px;
+    width: calc(100% - 12px);
+    padding: 5px;
+}
+
+.resume-experience .wne-dates {
+    width: calc(100% - 40px);
+    margin: auto;
+}
+.resume-experience .wne-dates input {
+    padding: 0px;
+}
+.resume-experience .wne-dates label {
+    width: 30px;
+}
+.resume-experience .wne-dates span {
+    display: flex;
+    justify-content: flex-start;
+}
+.resume-experience .wne-dates span:nth-child(1) {
+    margin-bottom: 6px;
+}
+.resume-avatar > span {
+    background: #3B45A9;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    letter-spacing: -6px;
+    color: #fff;
+}
+.work-subtextst > div > a {
+    text-decoration: underline;
+    color: #3b45a9;
+}
+
+.modal-block .cabinet .input label {
+    font-size: 16px;
+}
+.vabout-info-vak .vabout-item .input {
+    width: 90%;
+}
+.modal-button {
+    transition: .2s;
+}
+.modal-button.mbdis {
+    cursor: default;
+    background: gray;
+}
+
+
+.flot-nav__a.active {
+    color: white;
+    background-color: #9b2719;
+}
+.post-block > img,
+.post-block > div.afn-logo-r{
+    width: 32%;
+    height: 300px;
+    object-fit: cover;
+}
+.afn-logo-r-none {
+    display: none;
+}
+.afn-logo-r-list {
+    max-width: 275px;
+    width: 100%;
+    min-width: 275px;
+}
+.contact-label-check {
+    position: relative;
+    padding-left: 30px;
+}
+.contact-label-check input[type="checkbox"] {
+    left: 0px;
+    top: 0px;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .post-block > img {
+        width: 100%;
+    }
+}
+
+.vacancy strong,
+.cabinet strong,
+.flot-item__part strong {
+    font-family: "Myriad Pro Semibold";
+}
+
+.menu-lk-link {
+    justify-content: flex-start;
+}
+.menu-lk-link img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+.vacancy__info {
+    grid-template-columns: repeat(2, auto);
+}
+.vacancy__info .vi-item:last-child {
+    grid-column: 2 span;
+}
+.vacancy__meta a {
+    color: #3b45a9;
+}
+
+.dropdown-item {
+    color: #222;
+}
+.dm-search > input {
+    background: transparent;
+}
+.ed-user-role-head {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.eurh-fio {
+    display: flex;
+    position: relative;
+    color: #c9c9c9;
+}

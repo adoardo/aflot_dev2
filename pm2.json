@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "name": "aflot_dev",
+      "instances": "max",
+      "exec_mode": "cluster",
+      "script": "npm",
+      "args": "build",
+      "cwd": "/home/aflot/dev/",
+      "env": {
+        "HOST": "127.0.0.1",
+        "PORT": "3000",
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
