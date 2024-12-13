@@ -49,6 +49,7 @@
 <script setup>
 import { useModalStore } from "~/store/modal";
 import { menu, MenuSea } from "~/consts/MenuConsts";
+import watchScrollModal from "~/utils/watchScrollModal";
 
 const { closeModal } = useModalStore();
 
@@ -57,6 +58,8 @@ const props = defineProps({
     type: Boolean,
   },
 });
+
+watch(() => props.isOpen, watchScrollModal)
 
 function removeBrTags(text) {
   return text.replace(/<br\s*\/?>/g, "");

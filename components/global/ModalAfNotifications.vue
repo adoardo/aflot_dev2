@@ -11,6 +11,9 @@
 </template>
 <script setup>
 
+import watchScrollModal from "~/utils/watchScrollModal";
+
+
 const props = defineProps({
   isOpen: {
     type: Boolean,
@@ -26,6 +29,8 @@ const props = defineProps({
     }
   }
 });
+
+watch(() => props.isOpen, watchScrollModal)
 
 </script>
 

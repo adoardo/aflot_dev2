@@ -132,6 +132,7 @@
     import { useUsersStore } from "~/store/useUserStore";
     import { ref } from "vue";
     import { inject, computed } from "vue";
+    import watchScrollModal from "~/utils/watchScrollModal";
 
 
     import {useGlobalSettings} from "~/store/useGlobalSettings";
@@ -339,6 +340,8 @@
             console.log("Validation errors:", v$.value.$errors);
         }
     };
+
+    watch(() => props.isOpen, watchScrollModal)
 </script>
 
 <style lang="scss" scoped></style>

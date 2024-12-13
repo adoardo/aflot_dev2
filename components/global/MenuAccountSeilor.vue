@@ -51,11 +51,15 @@ import { MenuSeilorUser } from "~/consts/MenuSeilorUser";
 const { closeModal, toggleModal } = useModalStore();
 import { useUsersStore } from "~/store/useUserStore";
 
+import watchScrollModal from "~/utils/watchScrollModal";
+
 const userStore = useUsersStore();
 const { userInfo } = storeToRefs(userStore)
 watch(userInfo, () => {
 
 });
+
+watch(() => props.isOpen, watchScrollModal)
 
 const logoutMethod = async () => {
   userStore.logout();

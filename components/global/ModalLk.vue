@@ -79,6 +79,8 @@ import axios from 'axios'
 
 import api from '@/api/api'
 
+import watchScrollModal from "~/utils/watchScrollModal";
+
 const { closeModal, toggleModal, openModalCommon } = useModalStore();
 const userStore = useUsersStore();
 
@@ -100,6 +102,8 @@ const rules = {
 };
 
 const v$ = useVuelidate(rules, formData);
+
+watch(() => props.isOpen, watchScrollModal)
 
 async function toggleModalLk(modalName) {
   closeModal("lk");

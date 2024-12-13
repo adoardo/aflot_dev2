@@ -1,6 +1,7 @@
 <template>
   <NuxtLayout name="fullscreen">
-    <full-page ref="fullpage" :options="{scrollBar: true, navigation: true, navigationPosition: 'left'}" id="fullpage">
+    <!-- <full-page ref="fullpage" :options="{scrollBar: false, navigation: true, navigationPosition: 'left'}" id="fullpage"> -->
+    <full-page ref="fullpage" :options="{scrollBar: false, navigation: true, navigationPosition: 'left'}" id="fullpage">
 
       <div class="section section-content-1">
         <div class="main-content main-content-one">

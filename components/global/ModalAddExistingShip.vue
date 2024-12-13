@@ -131,6 +131,8 @@
     import api from "@/api/api";
 
     import {useUsersStore} from "~/store/useUserStore";
+    
+    import watchScrollModal from "~/utils/watchScrollModal";
 
     const userStore = useUsersStore();
     const {userInfo, isAuth} = storeToRefs(userStore)
@@ -204,6 +206,8 @@
             }
         }
     });
+
+    watch(() => props.isOpen, watchScrollModal)
 
     const send = async () => {
 

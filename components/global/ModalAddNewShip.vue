@@ -142,6 +142,9 @@
     import {required, email, minLength} from "@vuelidate/validators";
 
     import { useUsersStore } from "~/store/useUserStore";
+
+    import watchScrollModal from "~/utils/watchScrollModal";
+
     const userStore = useUsersStore();
     const { userInfo } = storeToRefs(userStore)
 
@@ -211,5 +214,7 @@
         }
 
     }
+
+    watch(() => props.isOpen, watchScrollModal)
 
 </script>

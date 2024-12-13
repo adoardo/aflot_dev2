@@ -159,6 +159,7 @@ import AfCloseModal from "@/components/uikit/AfCloseModal";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { useModalStore } from "~/store/modal";
+import watchScrollModal from "~/utils/watchScrollModal";
 const { closeModal, toggleModal, openModal, openModalCommon } = useModalStore();
 const props = defineProps({
   isOpen: {
@@ -212,6 +213,8 @@ watch(isVk, () => {
     };
   }
 })
+
+watch(() => props.isOpen, watchScrollModal)
 
 const formData = ref({
   email: "",

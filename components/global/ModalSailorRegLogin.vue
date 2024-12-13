@@ -119,12 +119,16 @@
     import useVuelidate from "@vuelidate/core";
     import { required, email, minLength } from "@vuelidate/validators";
     import { useModalStore } from "~/store/modal";
+    import watchScrollModal from "~/utils/watchScrollModal";
+
     const { closeModal } = useModalStore();
     const props = defineProps({
         isOpen: {
             type: Boolean,
         },
     });
+
+    watch(() => props.isOpen, watchScrollModal)
 
 
 </script>

@@ -28,6 +28,7 @@
 
 <script setup>
     import {useModalStore} from "~/store/modal";
+    import watchScrollModal from "~/utils/watchScrollModal";
 
     const {closeModal, toggleModal} = useModalStore();
 
@@ -40,6 +41,9 @@
             default: 'Ошибка. Пожалуйста, попробуйте позже.',
         },
     });
+
+    watch(() => props.isOpen, watchScrollModal)
+
 </script>
 
 <style>
