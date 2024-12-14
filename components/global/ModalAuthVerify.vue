@@ -35,6 +35,8 @@
 
     import {useGlobalSettings} from "~/store/useGlobalSettings";
 
+    import watchScrollModal from "~/utils/watchScrollModal";
+
     const {getJobs} = useGlobalSettings();
     const {getShipTypes} = useGlobalSettings();
 
@@ -46,6 +48,9 @@
             type: Boolean,
         },
     });
+
+    watch(() => props.isOpen, watchScrollModal)
+
 </script>
 
 <style lang="scss" scoped></style>

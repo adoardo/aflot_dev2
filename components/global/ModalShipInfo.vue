@@ -102,6 +102,8 @@
     import AfCloseModal from "@/components/uikit/AfCloseModal";
 
     import {useGlobalSettings} from "~/store/useGlobalSettings";
+    import watchScrollModal from "~/utils/watchScrollModal";
+
     const globalSettings = useGlobalSettings();
     const {getCurrentShip} = storeToRefs(globalSettings)
 
@@ -112,4 +114,6 @@
             type: Boolean,
         }
     });
+
+    watch(() => props.isOpen, watchScrollModal)
 </script>

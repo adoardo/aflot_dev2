@@ -27,6 +27,7 @@
 
 <script setup>
 import {useModalStore} from "~/store/modal";
+import watchScrollModal from "~/utils/watchScrollModal";
 
 const {closeModal, toggleModal} = useModalStore();
 
@@ -35,4 +36,6 @@ const props = defineProps({
     type: Boolean,
   },
 });
+
+watch(() => props.isOpen, watchScrollModal)
 </script>

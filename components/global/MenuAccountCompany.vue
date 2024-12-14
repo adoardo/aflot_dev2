@@ -70,6 +70,7 @@
 import { useModalStore } from "~/store/modal";
 import { useUsersStoreRefs } from "~/store/useUserStore";
 import { MenuCompany } from "~/consts/MenuConsts";
+import watchScrollModal from "~/utils/watchScrollModal";
 
 const { user } = useUsersStoreRefs();
 const { toggleModal, closeModal } = useModalStore();
@@ -80,6 +81,8 @@ const { userInfo } = storeToRefs(userStore)
 watch(userInfo, () => {
 
 });
+
+watch(() => props.isOpen, watchScrollModal)
 
 const logoutMethod = async () => {
   userStore.logout();

@@ -35,6 +35,7 @@
 <script setup>
     import {useModalStore} from "~/store/modal";
     import { useUsersStore } from "~/store/useUserStore";
+    import watchScrollModal from "~/utils/watchScrollModal";
 
     const {closeModal, openModal, toggleModal} = useModalStore();
     const userStore = useUsersStore();
@@ -50,6 +51,8 @@
     });
 
     let role = ref("seilor");
+
+    watch(() => props.isOpen, watchScrollModal)
 
     const submitRole = async () => {
         closeModal('msocwhois')
