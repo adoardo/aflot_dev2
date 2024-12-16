@@ -59,7 +59,6 @@ watch(userInfo, () => {
 
 });
 
-watch(() => props.isOpen, watchScrollModal)
 
 const logoutMethod = async () => {
   userStore.logout();
@@ -72,6 +71,8 @@ const props = defineProps({
     type: Boolean,
   },
 });
+
+watch(() => props.isOpen, watchScrollModal)
 </script>
 
 <style lang="scss" scoped>
