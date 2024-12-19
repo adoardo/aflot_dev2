@@ -23,11 +23,27 @@
         >
           {{ option }}
         </div>
+        <div
+            class="dropdown-item"
+            @click="showModal = true"
+        >
+          Другое
+        </div>
       </div>
     </div>
     <div class="input-error" v-if="error">
       <span>Пожалуйста, заполните поле</span>
     </div>
+  </div>
+  <div @click="outsideClick" v-if="showModal" class="other-modal-bg">
+    <div  class="other-modal">
+        <div class="modal-content">
+          <span class="close" @click="showModal = false">&times;</span>
+          <input class="modal-input" v-model="inputValue" placeholder="Введите значение" />
+  
+          <button class="modal-button" @click="inputValue ? handleSubmit(inputValue) : null">Submit</button>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -56,6 +72,22 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 const showDropdown = ref(false);
+
+const showModal = ref(false)
+const inputValue = ref('')
+
+function outsideClick(e) {
+  if(e.target.classList.contains('other-modal-bg')) {
+    showModal.value = false
+  }
+}
+
+function handleSubmit(option) {
+  const tagValue = props.single ? [option] : [...props.modelValue, option];
+  emit("update:modelValue", tagValue);
+  inputValue.value = ''
+  showModal.value = false
+}
 
 const availableOptions = computed(() =>
     props.optionsList.filter((x) => {
@@ -170,5 +202,68 @@ function getLength() {
   input {
     border-color: rgb(221, 32, 32);
   }
+}
+.other-modal {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  width: auto;
+  height: auto;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  width: 300px;
+  height: 120px;
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-button {
+  margin-top: 10px;
+  padding: 1px 5px;
+  font-size: 15px;
+  width: 30%;
+  text-align: center;
+  line-height: 1.6;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-input {
+  width: 90%;
+  height: 30px;
+  outline: black;
+  padding: 0 8px;
+}
+
+.other-modal-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  z-index: 150;
 }
 </style>
