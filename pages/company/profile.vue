@@ -40,16 +40,26 @@
 
             <div class="resume-main resume-main-margin">
               <button style="display: none;" @click="edTest()">ATATATATA</button>
-              <form id="resume-avatar">
-                <input v-show="false" accept="image/*" type='file' id="imgInp"/>
-                <div class="resume-avatar">
-                  <div class="bordered bordered-ct-logo">
-                    <img id="imgInpPreview" src="assets/img/header/logo-white.png" alt="avatar"/>
-                    <span>{{ companyProfile.first_name }}<br>{{ companyProfile.last_name }}</span>
-                    <text>&#9875;</text>
-                  </div>
-                </div>
-              </form>
+
+              <div v-if="companyProfile.avatar" class="company-avatar">
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  class="hidden-input"
+                  @change="upload($event, 'avatar')"
+                />
+                <img class="avatar" style="position: absolute" :src="createObjectURL(companyProfile.avatar)" alt="Аватар">
+                <span >{{ companyProfile.last_name.substring(0, 1).toUpperCase() }} {{ companyProfile.first_name.substring(0, 1).toUpperCase() }}</span>
+            </div>
+
+            <div v-else class="resume-avatar">
+              <div class="bordered bordered-ct-logo">
+                <img class="avatar-company" id="imgInpPreview" :src="companyProfile.avatar" alt="avatar"/>
+                <span>{{ companyProfile.first_name }}<br>{{ companyProfile.last_name }}</span>
+                <text>&#9875;</text>
+              </div>
+            </div>
+
 
 
               <div style="display: none;" class="atata">
@@ -664,9 +674,11 @@ const currentShip = ref({
   year_built: "-",
   _id: ""
 });
+const { $uploadFile } = useNuxtApp()
 const companyProfile = ref({
   company_name: "",
   company_address: "",
+  avatar:null,
   f_i_o: "",
   email: "",
   phone1: "",
@@ -678,6 +690,15 @@ const companyProfile = ref({
     mailing_notification: true,
   }
 });
+
+const upload = (e) => {
+  const file = e.target.files[0];
+  companyProfile.value.avatar = file;
+}
+
+const createObjectURL = (file) => {
+  return file && file instanceof File ? URL.createObjectURL(file) : file
+}
 
 const init = async () => {
   try {
@@ -745,6 +766,11 @@ const prepareDataForSending = (formData) => {
 
 const saveProfile = async () => {
   const dataToSubmit = prepareDataForSending(companyProfile);
+  if (companyProfile.value.avatar) {
+    const fileUrl = await $uploadFile(companyProfile.value.avatar).then((res) => res)
+    dataToSubmit.avatar = fileUrl
+    companyProfile.value.avatar = fileUrl
+  }
 
   try {
     await api.put("/company/profile", dataToSubmit).then((data) => {
@@ -948,6 +974,28 @@ const edTest = async () => {
   height: 170px;
   position: relative;
 }
+
+.hidden-input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .resume-avatar {
+    position: relative;
+  }
+  
+  .upload {
+    position: relative;
+  } 
+
+  .avatar {
+    height: 250px;
+    width: 250px;
+    border-radius: 45%;
+  }
 
 .resume-avatar {
   .bordered.bordered-ct-logo {

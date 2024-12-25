@@ -23,7 +23,15 @@
           <div class="resume-main">
 
             <div class="resume-avatar">
-              <span>{{ formData.last_name.substring(0, 1).toUpperCase() }} {{ formData.first_name.substring(0, 1).toUpperCase() }}</span>
+              <input
+                type="file"
+                name="avatar"
+                accept="image/png, image/jpeg"
+                class="hidden-input"
+                @change="upload($event, 'avatar')"
+              />
+              <img class="avatar" v-if="formData.avatar" style="position: absolute" :src="createObjectURL(formData.avatar)" alt="Аватар">
+              <span v-if="formData.avatar">{{ formData.last_name.substring(0, 1).toUpperCase() }} {{ formData.first_name.substring(0, 1).toUpperCase() }}</span>
             </div>
             <div class="resume-grid">
               <div class="input">
@@ -331,6 +339,13 @@
             </div>
 
             <div class="file upload">
+              <input
+                type="file"
+                accept="image/png, image/jpeg"
+                class="hidden-input"
+                @change="upload($event, 'media_file')"
+                />
+              <div v-if="formData.media_file" class="file__label">{{formData.media_file.name || getFileName(formData.media_file) }}</div>
               <div class="file__icon">
                 <img src="assets/img/resume/file.png" alt="file">
               </div>
@@ -378,6 +393,7 @@
             </div>
             <div class="resume-contact__second">
               <AfCheckbox
+                  v-if="formData.notification_settings"
                   v-model="formData.notification_settings.send_sms"
                   :descText="'Присылайте мне '"
                   :linkText="'уведомления на телефон'"
@@ -395,6 +411,7 @@
             </div>
             <div class="resume-contact__second">
                 <AfCheckbox
+                    v-if="formData.notification_settings"
                     v-model="formData.notification_settings.send_email"
                     :descText="'Присылайте мне '"
                     :linkText="'уведомления на почту'"
@@ -421,6 +438,7 @@
             </div>
             <div class="resume-contact__second">
               <AfCheckbox
+                  v-if="formData.notification_settings"
                   v-model="formData.notification_settings.send_telegram"
                   :descText="'Присылайте мне '"
                   :linkText="'уведомления в Telegram'"
@@ -431,7 +449,10 @@
           <h2 class="with-subtitle">Рассылка</h2>
 
           <label class="custom-checkbox">
-            <input type="checkbox" v-model="formData.notification_settings.mailing_notification">
+            <input
+              v-if="formData.notification_settings"
+              type="checkbox"
+              v-model="formData.notification_settings.mailing_notification">
             <span class="checkmark"></span>
             Хочу получать <a href="#">рассылку по новым вакансиям</a> для выбранных должностей
           </label>
@@ -470,6 +491,10 @@
 
 
   import { useUsersStore } from "~/store/useUserStore";
+  
+  const { $uploadFile } = useNuxtApp()
+  const FILE_KEYS = ['avatar', 'media_file']
+
   const userStore = useUsersStore();
   const { userInfo, isTg, isVk } = storeToRefs(userStore)
 
@@ -483,6 +508,8 @@
   }
 
   const formData = ref({
+    avatar: null,
+    media_file: null,
     first_name: "",
     last_name: "",
     main_documents: {},
@@ -546,6 +573,13 @@
 
   const saveResume = async () => {
     const dataToSubmit = prepareDataForSending();
+    await Promise.all(FILE_KEYS.map(async fileKey => {
+      if (dataToSubmit[fileKey] instanceof File) {
+        const fileUrl = await $uploadFile(dataToSubmit[fileKey]).then((res) => res)
+        dataToSubmit[fileKey] = fileUrl
+      }
+    }))
+
     await api.put("/resume", dataToSubmit).then((data) => {
       console.log('RESULT: ', data.value);
       window.location.reload();
@@ -555,7 +589,18 @@
     window.location.reload();
   }
 
+  const upload = async (e, key) => {
+    const file = e.target.files[0];
+    formData.value[key] = file;
+  }
 
+  const createObjectURL = (file) => {
+    return file && file instanceof File ? URL.createObjectURL(file) : file
+  }
+
+  const getFileName = (url) => {
+    return url ? decodeURIComponent(new URL(url).pathname.split('/').pop()).split('-').slice(1).join('-') : ''
+  }
 
   const addWorkExpierience = async () => {
     itemsWork.value.push({
@@ -605,5 +650,27 @@
   .resume-contact__content.tg-approved {
     background-color: #3b45a9;
     color: #fff;
+  }
+
+  .hidden-input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .resume-avatar {
+    position: relative;
+  }
+
+  .upload {
+    position: relative;
+  } 
+
+  .avatar {
+    height: 250px;
+    width: 250px;
+    border-radius: 45%;
   }
 </style>
