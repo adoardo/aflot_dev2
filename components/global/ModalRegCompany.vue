@@ -6,8 +6,19 @@
     <!-- /.menu-reg-title -->
 
     <div class="reg-about-top">
-      <a href="#" class="reg-about-link">
-        <img src="assets/img/menu/logo-about.png" alt="image"></a>
+      <input
+        type="file"
+        accept="image/png, image/jpeg"
+        class="hidden-input"
+        @change="upload($event)"
+      />
+      <img
+        v-if="formData.avatar"
+        class="avatar"
+        :src="createObjectURL(formData.avatar)"
+        alt="аватар"
+      />
+      <img v-else src="assets/img/menu/logo-about.png" alt="image" />
       <!-- /.reg-about-link -->
 
       <div class="reg-about-inputs">
@@ -161,6 +172,9 @@ import { required, email, minLength } from "@vuelidate/validators";
 import { useModalStore } from "~/store/modal";
 import watchScrollModal from "~/utils/watchScrollModal";
 const { closeModal, toggleModal, openModal, openModalCommon } = useModalStore();
+
+const { $uploadFile } = useNuxtApp()
+
 const props = defineProps({
   isOpen: {
     type: Boolean,
@@ -217,6 +231,7 @@ watch(isVk, () => {
 watch(() => props.isOpen, watchScrollModal)
 
 const formData = ref({
+  avatar: null,
   email: "",
   password: "",
   confirm_password: "",
@@ -292,7 +307,7 @@ const prepareDataForSending = () => {
   return preparedData;
 };
 
-const handleRegistration = () => {
+const handleRegistration = async () => {
 
   userStore.setAuthRole('company');
 
@@ -302,6 +317,10 @@ const handleRegistration = () => {
   v$.value.$touch();
 
   if (!v$.value.$error) {
+    if (dataToSubmit.avatar instanceof File) {
+    const fileUrl = await $uploadFile(dataToSubmit.avatar).then((res) => res)
+    dataToSubmit.avatar = fileUrl
+  }
     //alert('Vk: '+isVk.value+' Tg: '+isTg.value);
     if (isVk.value || isTg.value) {
       userStore.getSocData().then((data) => {
@@ -361,4 +380,33 @@ const handleRegistration = () => {
     console.log("Validation errors:", v$.value.$errors);
   }
 };
+
+const upload = async (e) => {
+  const file = e.target.files[0];
+  formData.value['avatar'] = file;
+}
+
+const createObjectURL = (file) => {
+  return file && file instanceof File ? URL.createObjectURL(file) : file
+}
 </script>
+
+<style scoped>
+  .hidden-input {
+    width: 126px;
+    height: 128px;
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .reg-about-top {
+    position: relative;
+  }
+
+  .avatar {
+    height: 126px;
+    width: 128px;
+    border-radius: 45%;
+  }
+</style>
