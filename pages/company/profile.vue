@@ -50,11 +50,11 @@
                 />
                 <img class="avatar" style="position: absolute" :src="createObjectURL(companyProfile.avatar)" alt="Аватар">
                 <span >{{ companyProfile.last_name.substring(0, 1).toUpperCase() }} {{ companyProfile.first_name.substring(0, 1).toUpperCase() }}</span>
-            </div>
+              </div>
 
             <div v-else class="resume-avatar">
               <div class="bordered bordered-ct-logo">
-                <img class="avatar-company" id="imgInpPreview" :src="companyProfile.avatar" alt="avatar"/>
+                <img class="avatar-company" id="imgInpPreview" src="assets/img/header/logo-white.png" alt="avatar"/>
                 <span>{{ companyProfile.first_name }}<br>{{ companyProfile.last_name }}</span>
                 <text>&#9875;</text>
               </div>
@@ -457,6 +457,7 @@
               </div>
               <div class="resume-contact__second">
                 <AfCheckbox
+                    v-if="companyProfile.notification_settings"
                     v-model="companyProfile.notification_settings.send_sms"
                     :linkText="'уведомления на телефон'"
                     :descText="'Присылайте мне '"
@@ -474,6 +475,7 @@
               </div>
               <div class="resume-contact__second">
                 <AfCheckbox
+                    v-if="companyProfile.notification_settings"
                     v-model="companyProfile.notification_settings.send_email"
                     :linkText="'уведомления на почту'"
                     :descText="'Присылайте мне '"
@@ -489,6 +491,7 @@
               </div>
               <div class="resume-contact__second">
                 <AfCheckbox
+                    v-if="companyProfile.notification_settings"
                     v-model="companyProfile.notification_settings.send_telegram"
                     :linkText="'уведомления в Telegram'"
                     :descText="'Присылайте мне '"
@@ -499,7 +502,11 @@
             <h2 class="with-subtitle">Рассылка</h2>
 
             <label class="custom-checkbox">
-              <input type="checkbox" v-model="companyProfile.notification_settings.mailing_notification"/>
+              <input
+                v-if="companyProfile.mailing_notification"
+                type="checkbox"
+                v-model="companyProfile.notification_settings.mailing_notification"
+              />
               <span class="checkmark"></span>
               Хочу получать <a href="#">рассылку о новых моряках</a>, по должностям,
               соответствующих актуальным (действующим)<br/>
@@ -976,8 +983,8 @@ const edTest = async () => {
 }
 
 .hidden-input {
-    width: 100%;
-    height: 100%;
+    width: 250px;
+    height: 250px;
     opacity: 0;
     position: absolute;
     z-index: 1;
