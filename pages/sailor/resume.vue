@@ -31,7 +31,7 @@
                 @change="upload($event, 'avatar')"
               />
               <img class="avatar" v-if="formData.avatar" style="position: absolute" :src="createObjectURL(formData.avatar)" alt="Аватар">
-              <span v-if="formData.avatar">{{ formData.last_name.substring(0, 1).toUpperCase() }} {{ formData.first_name.substring(0, 1).toUpperCase() }}</span>
+              <span v-else>{{ formData.last_name.substring(0, 1).toUpperCase() }} {{ formData.first_name.substring(0, 1).toUpperCase() }}</span>
             </div>
             <div class="resume-grid">
               <div class="input">
@@ -653,8 +653,8 @@
   }
 
   .hidden-input {
-    width: 100%;
-    height: 100%;
+    width: 250px;
+    height: 250px;
     opacity: 0;
     position: absolute;
     z-index: 1;
