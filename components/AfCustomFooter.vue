@@ -2,11 +2,11 @@
   <footer :class="fstyle">
     <div class="container container-footer">
       <div :class="flinkstyle">
-        <a href="/vacancies" class="footer-a">Морские вакансии</a>
-        <a href="/resumes" class="footer-a">Анкеты моряков</a>
-        <a href="/navy" class="footer-a">Морской флот</a>
-        <a href="/flot-dock" class="footer-a">Морские документы</a>
-        <a href="/work-sea" class="footer-a">Начать работу в море</a>
+        <a href="/vacancies" class="footer-a"  :class="{ active: isActive('vacancies') }" @click="setActiveTab('vacancies')"> Морские вакансии</a>
+        <a href="/resumes" class="footer-a" :class="{ active: isActive('resumes') }"@click="setActiveTab('resumes')">Анкеты моряков</a>
+        <a href="/navy" class="footer-a" :class="{ active: isActive('navy') }"@click="setActiveTab('navy')">Морской флот</a>
+        <a href="/flot-dock" class="footer-a" :class="{ active: isActive('flot-dock') }"@click="setActiveTab('flot-dock')">Морские документы</a>
+        <a href="/work-sea" class="footer-a" :class="{ active: isActive('work-sea') }"@click="setActiveTab('work-sea')">Начать работу в море</a>
       </div>
     </div>
   </footer>
@@ -22,15 +22,43 @@
       footerStyle: {
         type: String,
         default: 'footer'
+      },
+      activeTab: {
+        type: String,
+        default: 'vacancies'
       }
     },
     data() {
       return {
         flinkstyle: this.lnkStyle,
-        fstyle: this.footerStyle
+        fstyle: this.footerStyle,
+        active_tab: this.activeTab
       }
-    }
+    },
+
+    mounted() {
+      this.setActiveTabFromURL();
+    },
+
+    methods: {
+      isActive(path) {
+        return this.active_tab === path;
+      },
+      setActiveTab(tab) {
+        this.active_tab = tab;
+      },
+      setActiveFromURL() {
+        const path = window.location.pathname.replace('/', '')
+        ['vacancies', 'resumes', 'navy', 'flot-dock', 'work-sea'].includes(path) ? this.active_tab = path : this.active_tab = 'vacancies'
+      }
+    },
+
   }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+  .active {
+    color: white;
+    background-color: #9b2719 !important;
+  }
+</style>
