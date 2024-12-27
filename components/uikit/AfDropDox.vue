@@ -23,10 +23,10 @@
         >
           {{ option }}
         </div>
-        <div
-            class="dropdown-item"
-            @click="showModal = true"
-        >
+          <div
+          class="dropdown-button"
+          @click="showModal = true"
+          >
           Другое
         </div>
       </div>
@@ -41,7 +41,7 @@
           <span class="close" @click="showModal = false">&times;</span>
           <input class="modal-input" v-model="inputValue" placeholder="Введите значение" />
   
-          <button class="modal-button" @click="inputValue ? handleSubmit(inputValue) : null">Submit</button>
+          <button class="modal-button" @click="inputValue ? handleSubmit(inputValue) : null">Добавить</button>
         </div>
       </div>
   </div>
@@ -53,9 +53,18 @@ import {defineProps, defineEmits, ref, computed} from "vue";
 
 const props = defineProps({
   myInput: '',
-  modelValue: Array,
-  optionsList: Array,
-  optionsListIds: Array,
+  modelValue: { 
+    type:Array,
+    default:[],
+  },
+  optionsList: { 
+    type:Array,
+    default:[],
+  },
+  optionsListIds:  { 
+    type:Array,
+    default:[],
+  },
   title: {
     type: String,
     default: "Должность, которую рассматриваете (выбор из списка)",
@@ -87,6 +96,7 @@ function handleSubmit(option) {
   emit("update:modelValue", tagValue);
   inputValue.value = ''
   showModal.value = false
+  toggleDropdown()
 }
 
 const availableOptions = computed(() =>
@@ -166,6 +176,19 @@ function getLength() {
   }
 }
 
+.dropdown-button {
+  display: inline-block;
+  box-shadow: 0px 0px 1px 1px #d5d7ef;
+  margin: 10px;
+  padding: 3px 5px;
+  font-size: 15px;
+  text-align: center;
+  line-height: 1.6;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .custom-tag {
   width: 100%;
   max-width: 300px;
@@ -206,7 +229,7 @@ function getLength() {
 .other-modal {
   position: absolute;
   top: 50%;
-  left: 20%;
+  left: 40%;
   width: auto;
   height: auto;
   border-radius: 3px;
@@ -226,6 +249,7 @@ function getLength() {
   width: 300px;
   height: 120px;
   text-align: center;
+  padding: 20px;
 }
 
 .close {
@@ -234,6 +258,7 @@ function getLength() {
   right: 1px;
   font-size: 24px;
   cursor: pointer;
+  padding: 10px;
 }
 
 .modal-button {
