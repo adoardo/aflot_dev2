@@ -47,9 +47,13 @@
       setActiveTab(tab) {
         this.active_tab = tab;
       },
-      setActiveFromURL() {
+      setActiveTabFromURL() {
         const path = window.location.pathname.replace('/', '')
-        ['vacancies', 'resumes', 'navy', 'flot-dock', 'work-sea'].includes(path) ? this.active_tab = path : this.active_tab = 'vacancies'
+        if (['vacancies', 'resumes', 'navy', 'flot-dock', 'work-sea'].includes(path)) {
+          this.active_tab = path;
+        } else {
+          this.active_tab = 'vacancies'
+        }
       }
     },
 
