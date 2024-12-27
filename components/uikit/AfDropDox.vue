@@ -53,18 +53,9 @@ import {defineProps, defineEmits, ref, computed} from "vue";
 
 const props = defineProps({
   myInput: '',
-  modelValue: { 
-    type:Array,
-    default:[],
-  },
-  optionsList: { 
-    type:Array,
-    default:[],
-  },
-  optionsListIds:  { 
-    type:Array,
-    default:[],
-  },
+  modelValue: Array,
+  optionsList: Array,
+  optionsListIds: Array,
   title: {
     type: String,
     default: "Должность, которую рассматриваете (выбор из списка)",
@@ -99,13 +90,15 @@ function handleSubmit(option) {
   toggleDropdown()
 }
 
-const availableOptions = computed(() =>
-    props.optionsList.filter((x) => {
-      const p1 = !props.modelValue.includes(x);
-      const p2 = x.trim().toLowerCase().includes(searchInput.value.trim().toLowerCase());
-      return (p1 && p2);
-    })
-);
+const availableOptions = computed(() => {
+    if(props.optionsList.length > 1) {
+      return props.optionsList.data.filter((x) => {
+        const p1 = !props.modelValue.includes(x);
+        const p2 = x.trim().toLowerCase().includes(searchInput.value.trim().toLowerCase());
+        return (p1 && p2);
+      })
+    }
+});
 const canAddMoreTags = computed(() => {
   return props.single ? props.modelValue.length === 0 : true;
 });
