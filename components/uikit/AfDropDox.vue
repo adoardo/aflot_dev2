@@ -25,7 +25,7 @@
         </div>
           <div
           class="dropdown-button"
-          @click="showModal = true"
+          @click="openModal"
           >
           Другое
         </div>
@@ -38,7 +38,7 @@
   <div @click="outsideClick" v-if="showModal" class="other-modal-bg">
     <div  class="other-modal">
         <div class="modal-content">
-          <span class="close" @click="showModal = false">&times;</span>
+          <span class="close" @click="closeModal">&times;</span>
           <input class="modal-input" v-model="inputValue" placeholder="Введите значение" />
   
           <button class="modal-button" @click="inputValue ? handleSubmit(inputValue) : null">Добавить</button>
@@ -70,6 +70,17 @@ const props = defineProps({
   },
 });
 
+const openModal = () => {
+  showModal.value = true
+  document.body.style.overflow = 'hidden'
+}
+
+const closeModal = () => {
+  showModal.value = false
+  document.body.style.overflow = ''
+}
+
+
 const emit = defineEmits(["update:modelValue"]);
 const showDropdown = ref(false);
 
@@ -78,6 +89,7 @@ const inputValue = ref('')
 
 function outsideClick(e) {
   if(e.target.classList.contains('other-modal-bg')) {
+    document.body.style.overflow = ''
     showModal.value = false
   }
 }
